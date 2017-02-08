@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<div class="row">
+<div class="col-md-12">
+<h3>{{item.title}}</h3>
+<p>{{item.description}}</p>  
+</div>
+</div>
+
+<!--if user is logged in show Edit and Delete Items Link-->
+{% if session['loggedin'] %}
+<div class="row">
+<div class="col-md-12">
+  <h4>Created By: {{item.user.name}}</h4>
+  <a href="{{ url_for('editItem', item=item.title) }}">Edit Item</a>
+  <a href="{{ url_for('deleteItem', item=item.title) }}">Delete Item</a>
+</div>
+</div>
+{% endif %}
+
+{% endblock %}

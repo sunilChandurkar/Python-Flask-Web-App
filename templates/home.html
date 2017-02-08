@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="row">
+<div class="col-md-3">
+<h3>Categories</h3>
+
+{% for c in categories %}
+<h4><a href="{{url_for('showCategory', category=c.name)}}">{{ c.name }}</a></h4>
+{% endfor %}
+
+</div>
+<div class="col-md-9">
+<h3>Latest Items</h3>
+
+{% for item in items %}
+<h4><a href="{{url_for('showItem', category=item.category.name, item=item.title)}}">{{item.title}}</a></h4>
+{% endfor %}
+
+</div>
+</div>
+
+<!--if user is logged in show Add Item Link-->
+{% if session['loggedin'] %}
+<div class="row">
+<div class="col-md-12">
+	{% if session["loggedin"] %}
+  		<a href="{{ url_for('createItem') }}">Add Item</a>
+  	{% endif %}
+</div>
+</div>
+{% endif %}
+
+
+
+{% endblock %}
