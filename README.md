@@ -72,6 +72,46 @@ sudo apt-get install python-psycopg2
 
 sudo apt-get install python-sqlalchemy
 
+VIRTUAL HOST
+
+sudo nano /etc/apache2/sites-available/itemcatalog.conf
+
+<VirtualHost *:80>
+                ServerName 52.32.162.160
+                ServerAlias ec2-52-32-162-160.us-west-2.compute.amazonaws.com
+                ServerAdmin grader@52.32.162.160
+                WSGIScriptAlias / /var/www/itemcatalog/itemcatalog.wsgi
+                <Directory /var/www/itemcatalog/itemcatalog/>
+                        Order allow,deny
+                        Allow from all
+                </Directory>
+                Alias /static /var/www/itemcatalog/itemcatalog/static
+                <Directory /var/www/itemcatalog/itemcatalog/static/>
+                        Order allow,deny
+                        Allow from all
+                </Directory>
+                ErrorLog ${APACHE_LOG_DIR}/error.log
+                LogLevel warn
+                CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+
+WSGI FILE
+
+cd /var/www/itemcatalog
+
+sudo nano itemcatalog.wsgi
+
+
+#!/usr/bin/python
+import sys
+import logging
+logging.basicConfig(stream=sys.stderr)
+sys.path.insert(0,"/var/www/itemcatalog/itemcatalog/")
+
+from project import app as application
+application.secret_key = 'mysecret'
+
+
 CHANHGING SSH
 
 sudo nano /etc/ssh/sshd_config
@@ -84,14 +124,6 @@ Disable root user by commenting out this line.
 
 sudo service ssh restart
 
+sudo service apache2 restart 
 
-Software Installed
-apache2
-libapache2-mod-wsgi
-git
-python-pip
-Flask
-oauth2client
-postgresql 
-python-psycopg2
-python-sqlalchemy
+
