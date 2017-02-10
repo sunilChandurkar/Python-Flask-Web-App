@@ -126,4 +126,9 @@ sudo service ssh restart
 
 sudo service apache2 restart 
 
+Grader can login by - 
+ssh -i ~/.ssh/udacity_key.rsa grader@52.32.162.160 -p 2200
+
+
+
 
